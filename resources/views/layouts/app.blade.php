@@ -1,60 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} | Dashboard</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-    {{-- <link rel="shortcut icon" href="{{ asset('assets/img/fav.png') }}" type="image/x-icon"> --}}
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css">
-
-    {{-- @vite(['resources/css/app.css']) --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
-    <style>
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="number"],
-        select,
-        textarea {
-            border: 2px solid #509f67;
-        }
-    </style>
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gray-100">
+<body class="font-sans antialiased">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        @include('layouts.navigation')
 
+        <!-- Page Heading -->
+        @if (isset($header))
+            <header class="bg-white dark:bg-gray-800 shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endif
 
-    <!-- start navbar -->
-    @include('layouts.navbar')
-    <!-- end navbar -->
-
-
-    <!-- strat wrapper -->
-    <div class="h-screen flex flex-row flex-wrap">
-
-        <!-- start sidebar -->
-        @include('layouts.sidebar')
-        <!-- end sidbar -->
-
-        <!-- strat content -->
-        <div class="bg-gray-100 flex-1 p-6 md:mt-16">
-            @yield('content')
-        </div>
-        <!-- end content -->
-
+        <!-- Page Content -->
+        <main>
+            {{ $slot }}
+        </main>
     </div>
-    <!-- end wrapper -->
-
-    <!-- script -->
-    {{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> --}}
-    <script src="{{ asset('assets/js/scripts.js') }}"></script>
-    <!-- end script -->
-
 </body>
 
 </html>

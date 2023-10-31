@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminAlertController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\ProfileController;
@@ -30,7 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('admin')->middleware('admin')->group(function () {
         Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
         Route::view('/ecommerce', 'admin.ecommerce')->name('admin.ecommerce');
-        Route::view('/alert', 'admin.alert')->name('admin.alert');
+        Route::get('/alert', [AdminAlertController::class, 'index'])->name('admin.alert');
         Route::view('/email', 'admin.email')->name('admin.email');
 
         Route::resource('categories', AdminCategoryController::class, [

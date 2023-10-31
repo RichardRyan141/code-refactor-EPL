@@ -38,6 +38,36 @@
                 </a>
             </li>
             <li class="relative px-6 py-3">
+                @if (Request::is('admin/products*'))
+                    <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                        aria-hidden="true"></span>
+                @endif
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('admin/products*') ? 'text-gray-800 dark:text-gray-100' : '' }}"
+                    href="{{ route('admin.products.index') }}">
+                    <template x-if="!dark">
+                        <img src="{{ asset('assets/img/shopping-bag.png') }}" style="margin-left: 2px; width: 15px; height: 20px;" alt="Shopping Bag Icon">
+                    </template>
+                    <template x-if="dark">
+                        <img src="{{ asset('assets/img/invert-shopping-bag.png') }}" style="margin-left: 2px; width: 15px; height: 20px;" alt="Shopping Bag Icon">
+                    </template>
+                    <span class="ml-4">Product</span>
+                </a>
+            </li>
+            <li class="relative px-6 py-3">
+                @if (Request::is('admin/ecommerce*'))
+                    <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                        aria-hidden="true"></span>
+                @endif
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('admin/ecommerce*') ? 'text-gray-800 dark:text-gray-100' : '' }}"
+                    href="{{ route('admin.ecommerce') }}">
+                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                    <span class="ml-4">E-Commerce</span>
+                </a>
+            </li>
+            <li class="relative px-6 py-3">
                 <button
                     class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     @click="togglePagesMenu" aria-haspopup="true">

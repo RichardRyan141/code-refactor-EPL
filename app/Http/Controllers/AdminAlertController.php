@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alert;
+use Cache;
 use Illuminate\Http\Request;
 
 class AdminAlertController extends Controller
@@ -12,9 +13,11 @@ class AdminAlertController extends Controller
      */
     public function index()
     {
-        return view('admin.test-alert', [
-            'alerts' => Alert::all(),
-        ]);
+        $alerts = Cache::remember('alert', 60, function () {
+            return Alert::all();
+        });
+        
+        return view('admin.test-alert', compact('alerts'));
     }
 
     /**

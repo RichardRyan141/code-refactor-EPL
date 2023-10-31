@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,9 +15,11 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        return view('admin.products.index', [
-            'products' => Product::all(),
-        ]);
+        $products = Cache::remember('products', 120, function () {
+            return Product::all();
+        });
+        
+        return view('admin.products.index', compact('products'));
     }
 
     /**

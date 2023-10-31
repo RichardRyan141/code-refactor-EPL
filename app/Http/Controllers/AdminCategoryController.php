@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Cache;
+use DB;
 use Illuminate\Http\Request;
 
 class AdminCategoryController extends Controller
@@ -12,9 +14,11 @@ class AdminCategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index', [
-            'categories' => Category::all(),
-        ]);
+        $categories = Cache::remember('categories', 120, function () {
+            return Category::all();
+        });
+        
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**

@@ -41,6 +41,12 @@ class AdminCategoryController extends Controller
 
         Category::create($validated);
 
+        Cache::forget('categories');
+
+        $categories = Cache::remember('categories', 120, function () {
+            return Category::all();
+        });
+
         return redirect()->route('admin.categories.index')->with('success', 'Category has been created!');
     }
 
@@ -79,6 +85,11 @@ class AdminCategoryController extends Controller
 
         Category::where('id', $category->id)->update($validated);
 
+        Cache::forget('categories');
+        $categories = Cache::remember('categories', 120, function () {
+            return Category::all();
+        });
+
         return redirect()->route('admin.categories.index')->with('success', 'Category has been updated!');
     }
 
@@ -88,6 +99,11 @@ class AdminCategoryController extends Controller
     public function destroy(Category $category)
     {
         Category::destroy($category->id);
+
+        Cache::forget('categories');
+        $categories = Cache::remember('categories', 120, function () {
+            return Category::all();
+        });
 
         return redirect()->route('admin.categories.index')->with('success', 'Category has been deleted!');
     }

@@ -54,6 +54,11 @@ class AdminProductController extends Controller
 
         Product::create($validated);
 
+        Cache::forget('products');
+        $products = Cache::remember('products', 120, function () {
+            return Product::all();
+        });
+
         return redirect()->route('admin.products.index')->with('success', 'Product has been created!');
     }
 
@@ -71,7 +76,7 @@ class AdminProductController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Product $product)
-    {
+    {        
         return view('admin.products.edit', [
             'product' => $product,
             'categories' => Category::all(),
@@ -108,6 +113,11 @@ class AdminProductController extends Controller
 
         Product::where('id', $product->id)->update($validated);
 
+        Cache::forget('products');
+        $products = Cache::remember('products', 120, function () {
+            return Product::all();
+        });
+        
         return redirect()->route('admin.products.index')->with('success', 'Product has been updated!');
     }
 
@@ -122,6 +132,11 @@ class AdminProductController extends Controller
 
         Product::destroy($product->id);
 
+        Cache::forget('products');
+        $products = Cache::remember('products', 120, function () {
+            return Product::all();
+        });
+        
         return redirect()->route('admin.products.index')->with('success', 'Product has been deleted!');
     }
 }

@@ -1,9 +1,12 @@
 <x-admin-layout>
-    <div class="card w-3/4 lg:w-full">
+    <div class="card w-3/4 lg:w-full" style="margin-top: 10px;">
         <div class="card-body">
             <div class="flex flex-row justify-between items-center">
                 <h1 class="font-extrabold text-lg">Edit {{ $category->name }} Category</h1>
-                <a href="{{ route('admin.categories.index') }}" class="btn-gray text-sm">Back to Categories</a>
+                <a href="{{ route('admin.categories.index') }}" class="btn-gray text-sm" 
+                    style="background-color: #000000; color: #FFFFFF; padding: 10px; border: 1px solid #000000; border-radius: 5px; cursor: pointer;">
+                        Back to Categories
+                </a>
             </div>
 
             <form action="/admin/categories/{{ $category->slug }}" method="POST" class="mt-5">
@@ -27,7 +30,10 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn mt-5">Create Category</button>
+                <button type="submit" class="btn mt-5" 
+                    style="background-color: #00FF00; color: #000000; padding: 10px; border: 1px solid #000000; border-radius: 5px; cursor: pointer; margin-top: 10px; align: center;">
+                        Edit Category
+                </button>
             </form>
         </div>
     </div>

@@ -13,7 +13,7 @@ class AdminAlertController extends Controller
      */
     public function index()
     {
-        $alerts = Cache::remember('alert', 60, function () {
+        $alerts = Cache::remember('alerts', 60, function () {
             return Alert::all();
         });
         
@@ -31,6 +31,12 @@ class AdminAlertController extends Controller
 
         Alert::create($validated);
 
+        Cache::forget('alerts');
+
+        $alerts = Cache::remember('alerts', 60, function () {
+            return Alert::all();
+        });
+
         //return redirect()->route('admin.categories.index')->with('success', 'Category has been created!');
     }
 
@@ -40,6 +46,12 @@ class AdminAlertController extends Controller
     public function destroy(Alert $alerts)
     {
         Alert::destroy($alerts->id);
+
+        Cache::forget('alerts');
+
+        $alerts = Cache::remember('alerts', 60, function () {
+            return Alert::all();
+        });
 
         //return redirect()->route('admin.categories.index')->with('success', 'Category has been deleted!');
     }

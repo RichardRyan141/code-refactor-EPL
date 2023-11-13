@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAlertController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,12 +28,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/cart', [CartController::class, 'index'])->name('commerce.cart');
 
     Route::prefix('admin')->middleware('admin')->group(function () {
         Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
         Route::view('/ecommerce', 'admin.ecommerce')->name('admin.ecommerce');
         Route::get('/alert', [AdminAlertController::class, 'index'])->name('admin.alert');
         Route::view('/email', 'admin.email')->name('admin.email');
+        Route::get('/cart', [CartController::class, 'index'])->name('admin.cart');
+        Route::get('/cart/filter', [CartController::class, 'filter'])->name('admin.cart.filter');
+        
 
         Route::resource('categories', AdminCategoryController::class, [
             'names' => [

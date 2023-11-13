@@ -23,13 +23,11 @@
                         </x-nav-link>
                     </div>
                 @endif
-                @if (Auth::user()->role != 'admin')
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('commerce.cart')" :active="request()->routeIs('commerce.cart')">
-                            {{ __('Shopping Cart') }}
-                        </x-nav-link>
-                    </div>
-                @endif
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('commerce.cart')" :active="request()->routeIs('commerce.cart')">
+                        {{ __('Shopping Cart') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

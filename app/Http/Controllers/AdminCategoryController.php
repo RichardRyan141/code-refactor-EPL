@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ModelEvent;
 use App\Models\Category;
 use Cache;
 use DB;
+use Event;
 use Illuminate\Http\Request;
 
 class AdminCategoryController extends Controller
@@ -89,6 +91,8 @@ class AdminCategoryController extends Controller
         $categories = Cache::remember('categories', 120, function () {
             return Category::all();
         });
+
+        ModelEvent::dispatch($category);
 
         return redirect()->route('admin.categories.index')->with('success', 'Category has been updated!');
     }

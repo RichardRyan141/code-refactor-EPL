@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    //Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.detail');
 
     Route::prefix('admin')->middleware('admin')->group(function () {
         Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');

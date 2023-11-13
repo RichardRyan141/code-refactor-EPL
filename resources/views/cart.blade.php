@@ -320,6 +320,9 @@
                         <th class="px-4 py-3">Name</th>
                         <th class="px-4 py-3">Product</th>
                         <th class="px-4 py-3">Quantity</th>
+                        <th class="px-4 py-3">Unit Price</th>
+                        <th class="px-4 py-3">Product Price</th>
+                        <th class="px-4 py-3">Action</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -336,20 +339,43 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <p class="font-semibold">{{ $cart->user_id }}</p>
+                                        <p class="font-semibold">{{ $cart->user_name }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $cart->product_id }}
+                                {{ $cart->product_name }}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{ $cart->quantity }}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{ $cart->unitPrice }}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{ $cart->productTotalPrice }}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                <div class="flex flex-row">
+                                    <a href="{{ route('cart', $cart->product_id) }}"
+                                        class="btn-info mr-2">View Product</a>
+                                    <form action="/cart/{{ $cart->id }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-danger"
+                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            <div class="flex justify-between items-center my-6">
+                <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 margin-left:10px">
+                    Total Price = {{ $totalPrice  }}
+                </h2>
+            </div>
         </div>
     </div>
 </x-app-layout>

@@ -37,7 +37,7 @@ class CartController extends Controller
                 $cart->user_id = User::where('id', $cart->user_id)->first()->name;
                 $cart->product_id = Product::where('id', $cart->product_id)->first()->name;
             }
-            return view('commerce.cart', compact('carts'));
+            return view('cart', compact('carts'));
         }
     }
 

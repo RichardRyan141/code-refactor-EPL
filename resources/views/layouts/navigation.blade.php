@@ -25,7 +25,7 @@
                 @endif
                 @if (Auth::user()->role != 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('commerce.cart')" :active="request()->routeIs('commerce.cart')">
+                        <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
                             {{ __('Shopping Cart') }}
                         </x-nav-link>
                     </div>

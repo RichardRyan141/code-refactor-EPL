@@ -1,0 +1,9 @@
+parameters:
+    level: max
+    paths:
+        - .
+    excludePaths:
+        - config
+        - vendor
+        - node_modules
+        - languages

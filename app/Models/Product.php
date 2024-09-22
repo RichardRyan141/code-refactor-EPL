@@ -5,54 +5,81 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Class Product
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property string $slug
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSlug($value)
+ */
 class Product extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    /** @var array<string> */
     protected $with = ['category'];
 
-    public function scopeFilter(Builder $query, array $filters)
+    /**
+     * @param Builder<Product> $query
+     * @param array<string, mixed> $filters
+     * @return Builder<Product>
+     */
+    public function scopeFilter(Builder $query, array $filters): Builder
     {
-        // if ($category) {
-        //     return $query->whereHas('category', function ($query) use ($category) {
-        //         $query->where('slug', $category);
-        //     });
-        // }
-
         $query->when(
             $filters['search'] ?? false,
-            fn ($query, $search) =>
-            $query->where(
-                fn ($query) =>
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-            )
+            fn (Builder $query, $search) =>
+                $query->where(
+                    fn ($query) =>
+                        $query->where('name', 'like', '%' . $search . '%')
+                            ->orWhere('description', 'like', '%' . $search . '%')
+                )
         );
 
         $query->when(
             $filters['category'] ?? false,
-            fn ($query, $category) =>
-            $query->whereHas(
-                'category',
-                fn ($query) =>
-                $query->where('slug', $category)
-            )
+            fn (Builder $query, $category) =>
+                $query->whereHas(
+                    'category',
+                    fn ($query) =>
+                        $query->where('slug', $category)
+                )
         );
+
+        return $query;
     }
 
-    public function category()
+    /**
+     * @return BelongsTo<Category, Product>
+     */
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function cart()
+    /**
+     * @return HasMany<Cart>
+     */
+    public function cart(): HasMany
     {
         return $this->hasMany(Cart::class);
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }

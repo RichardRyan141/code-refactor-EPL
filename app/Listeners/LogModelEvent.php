@@ -25,9 +25,9 @@ class LogModelEvent
     {
         $action = $event->model->isDirty() ? 'updated' : ($event->model->exists ? 'created' : 'deleted');
 
-        $oldValues = $event->model->getOriginal()->name;
+        $oldValues = $event->model->getOriginal();
         $oldValuesString = implode(', ', $oldValues);
-        $newValues = $event->model->getAttributes()->name;
+        $newValues = $event->model->getAttributes();
         $newValuesString = implode(', ', $newValues);
 
         $message = "{$action}: old values = {$oldValuesString}, new values = {$newValuesString}";

@@ -15,7 +15,10 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->role !== 'admin') {
+        $user = $request->user();
+
+        // Check if user is authenticated and has the 'admin' role
+        if (!$user || $user->role !== 'admin') {
             return redirect('/');
         }
 
